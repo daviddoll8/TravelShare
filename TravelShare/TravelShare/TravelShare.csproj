@@ -13,6 +13,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0-preview.3.24207.3" />
+        <PackageReference Include="RestSharp" Version="110.2.1-alpha.0.20" />
     </ItemGroup>
 
 </Project>
