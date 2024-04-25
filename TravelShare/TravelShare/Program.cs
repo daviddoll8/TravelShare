@@ -7,6 +7,7 @@ using TravelShare.Data;
 using TravelShare.EmailSending.Options;
 using TravelShare.Extensions;
 using TravelShare.Services;
+using TravelShare.UserManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -14,16 +15,22 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<TravelShareUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
         options.Lockout.AllowedForNewUsers = true;
         options.Lockout.MaxFailedAccessAttempts = 5;
         options.Password.RequiredLength = 12;
     })
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+if (builder.Environment.IsDevelopment())
+{ 
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+}
+
 builder.Services.AddRazorPages();
 
 builder.Services.ConfigureMailgunOptions(builder.Environment, builder.Configuration);
@@ -48,6 +55,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
