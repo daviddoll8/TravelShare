@@ -21,6 +21,7 @@ builder.Services.AddDefaultIdentity<TravelShareUser>(options =>
         options.SignIn.RequireConfirmedAccount = true;
         options.Lockout.AllowedForNewUsers = true;
         options.Lockout.MaxFailedAccessAttempts = 5;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
         options.Password.RequiredLength = 12;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
